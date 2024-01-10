@@ -51,7 +51,7 @@ The code seems to first intialise UCSRB and UCSRA which are both USART control a
 
 ![image](https://github.com/ZaighamKH/HTB-Writeups/assets/119772901/1551c4c9-caca-47a8-8161-c9c096c69e0b)
 
-From the datasheet we can tell the the pattern of sbi and cbi for 6th bit shows when transmit is completed, so we are now concerened with the pattern on bit 5 as it does not follow a pattern like bit 6. This could represent the data that was transmitted. As pin 5 is set or cleared every third line, we create a simple python script to create a binary value where the value is 0 when pin 5 is cleared and the value is 1 when pin is set. First the output data is cleaned to have just cbi and sbi in every line, this method was chosen over having just pin numbers as cbi and sbi are unique making it easy to format. We simply replace any line that contains "cbi" by just "cbi" and the same for "sbi". Following commands was used for formatting:
+From the datasheet we can tell the the pattern of sbi and cbi for 6th bit shows when transmit is completed, so we are now concerened with the bit 5 as it does not follow a pattern like bit 6. This could represent the data that was transmitted. As pin 5 is set or cleared every third line, we create a simple python script to create a binary value where the value is 0 when pin 5 is cleared and the value is 1 when pin is set. First the output data is cleaned to have just cbi and sbi in every line, this method was chosen over having just pin numbers as cbi and sbi are unique making it easy to format. We simply replace any line that contains "cbi" by just "cbi" and the same for "sbi". Following commands was used for formatting:
 ```bash
 grep -E "(cbi|sbi)" raw_output.txt > formatted_output.txt
 sed -i 's/.*\(cbi\|sbi\).*/\1/' formatted_output.txt
@@ -91,10 +91,7 @@ with open("formatted_output.txt") as file:
     print(x)
 ```
 
-Finally when the script is run we obtain the flag as hypthoesised.
+Finally when the script is run we obtain the flag as hypothesised.
 ```bash
 set_flag:HTB{817......}
 ```
-
-
-
